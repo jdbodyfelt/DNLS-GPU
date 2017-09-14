@@ -1,0 +1,13 @@
+CXX=nvcc
+CXXFLAGS=-std=c++11 -D_MWAITXINTRIN_H_INCLUDED -D_FORCE_INLINES -O3 -g 
+LFLAGS=-lcuda -lcufft -lcurand -lm
+#-libstdc++ -lm
+
+dnls: clean
+	$(CXX) $(CXXFLAGS) $@.cu  -o $@ $(LFLAGS)
+
+%.o:	%.cu
+	$(CXX) $(CXXFLAGS) -c $< -o $@ $(LFLAGS)
+
+clean:
+	rm -f *~ *.o dnls *.dat
